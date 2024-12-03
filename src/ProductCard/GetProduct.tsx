@@ -5,7 +5,6 @@ import { fetchProducts } from "../slices/productSlice";
 import { deleteProduct } from "../slices/productDeleteSlice";
 import ProductEditForm from "./ProductEditForm";
 import ProductFilterForm from "./ProductFilterForm";
-// import (useNavigation) 
 import {
   Table,
   TableBody,
@@ -22,7 +21,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Typography
+  Typography,
+  TablePagination
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -40,6 +40,8 @@ const ProductDashboard: React.FC = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState<string | null>(null);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
+  const [page, setPage] = useState(0); // Current page index
+  const [rowsPerPage, setRowsPerPage] = useState(3); // Number of rows per page
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -81,6 +83,15 @@ const ProductDashboard: React.FC = () => {
     return constructURL(BASE_URL, imagePath);
   };
 
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); // Reset page to 0 when rows per page change
+  };
+
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#F7EFE5">
@@ -97,9 +108,12 @@ const ProductDashboard: React.FC = () => {
     );
   }
 
+  // Get the current page products
+  const currentProducts = products.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
   return (
     <div style={{ backgroundColor: "#F7EFE5", padding: '20px' }}>
-      <Button sx={{bgcolor: "#674188",color:"white"}}  onClick={()=>navigate('/')}>
+      <Button sx={{ bgcolor: "#674188", color: "white" }} onClick={() => navigate('/')}>
         Home
       </Button>
       <Typography variant="h4" gutterBottom align="center" sx={{ color: "#674188" }}>
@@ -111,58 +125,66 @@ const ProductDashboard: React.FC = () => {
           No products available
         </Typography>
       ) : (
-        <TableContainer component={Paper} sx={{ backgroundColor: "#E2BFD9" }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-              <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Image</TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Product Name</TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Description</TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Price</TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Stock</TableCell>
-                <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products.map((product) => {
-                const imageUrl = getImageUrl(product.images && product.images[0]);
-                return (
-                  <TableRow key={product._id}>
-                    <TableCell>
-                      <img src={imageUrl} alt={product.productname} style={{ width: '100px', height: 'auto', objectFit: 'cover' }} />
-                    </TableCell>
-                    <TableCell align="center" sx={{ color: "#674188",fontWeight:"semibold" }}>{product.productname}</TableCell>
-                    <TableCell align="center" sx={{ color: "#674188" }}>{product.description}</TableCell>
-                    <TableCell align="center" sx={{ color: "#674188" }}>${product.price.toFixed(2)}</TableCell>
-                    <TableCell align="center" sx={{ color: "#674188" }}>{product.stock}</TableCell>
-                    <TableCell align="center">
+        <>
+          <TableContainer component={Paper} sx={{ backgroundColor: "#E2BFD9" }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Image</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Product Name</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Description</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Price</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Stock</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: "bold", color: "#674188" }}>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {currentProducts.map((product) => {
+                  const imageUrl = getImageUrl(product.images && product.images[0]);
+                  return (
+                    <TableRow key={product._id}>
+                      <TableCell>
+                        <img src={imageUrl} alt={product.productname} style={{ width: '100px', height: 'auto', objectFit: 'cover' }} />
+                      </TableCell>
+                      <TableCell align="center" sx={{ color: "#674188", fontWeight: "semibold" }}>{product.productname}</TableCell>
+                      <TableCell align="center" sx={{ color: "#674188" }}>{product.description}</TableCell>
+                      <TableCell align="center" sx={{ color: "#674188" }}>${product.price.toFixed(2)}</TableCell>
+                      <TableCell align="center" sx={{ color: "#674188" }}>{product.stock}</TableCell>
+                      <TableCell align="center">
                       <Button
                         variant="contained"
                         color="#674188"
                         onClick={() => handleOpenEditDialog(product)}
-                        sx={{ marginRight: "8px",color:"#674188",fontWeight:"bold" }}
+                        sx={{ marginRight: "8px",color:"#674188",fontWeight:"bold" ,backgroundColor: "#F7EFE5" }}
                       >
                         Edit
                       </Button>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => handleOpenDeleteDialog(product._id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleOpenDeleteDialog(product._id)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 15]}
+            component="div"
+            count={products.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </>
       )}
-      <Dialog
-        open={deleteDialogOpen}
-        onClose={handleCloseDeleteDialog}
-      >
+      <Dialog open={deleteDialogOpen} onClose={handleCloseDeleteDialog}>
         <DialogTitle>{"Confirm Deletion"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
