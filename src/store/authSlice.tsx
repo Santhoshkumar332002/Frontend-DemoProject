@@ -28,6 +28,8 @@ interface LoginUser {
   password: string;
 }
 
+// const axiosError = error as AxiosError;
+
 export const register = createAsyncThunk(
   'auth/register',
   async (userInfo: RegisterUser, { rejectWithValue }) => {
@@ -36,13 +38,13 @@ export const register = createAsyncThunk(
       return response.data;
     } catch (error) {
       const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.data) {
-        return rejectWithValue((axiosError.response.data as { message: string }).message);
-      }
-      return rejectWithValue('An unexpected error occurred');
+      const errorMessage = (axiosError.response?.data as { message: string })?.message;
+
+      return rejectWithValue(errorMessage ?? 'An unexpected error occurred');
     }
   }
 );
+
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -52,10 +54,9 @@ export const login = createAsyncThunk(
       return response.data;
     } catch (error) {
       const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.data) {
-        return rejectWithValue((axiosError.response.data as { message: string }).message);
-      }
-      return rejectWithValue('An unexpected error occurred');
+      const errorMessage = (axiosError.response?.data as { message: string })?.message;
+
+      return rejectWithValue(errorMessage ?? 'An unexpected error occurred');
     }
   }
 );

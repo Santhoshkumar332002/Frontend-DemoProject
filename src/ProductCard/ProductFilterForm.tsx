@@ -8,7 +8,7 @@ import { Button, TextField, Box } from "@mui/material";
 interface FormData {
   productname: string;
   createdDate: string;
-  stock?: string; // Make stock optional
+  stock?: string; 
 }
 
 const ProductFilterForm: React.FC = () => {
@@ -17,7 +17,7 @@ const ProductFilterForm: React.FC = () => {
 
   const onSubmit = (data: FormData) => {
     console.log("Form data:", data);
-    // Dispatch filter action with the form data
+
     dispatch(fetchFilteredProducts(data));
   };
 
@@ -36,7 +36,7 @@ const ProductFilterForm: React.FC = () => {
         label="Created Date"
         type="date"
         slotProps={{
-          inputLabel: { shrink: true } // Apply the InputLabelProps here
+          inputLabel: { shrink: true } 
         }}
         {...register("createdDate")}
         sx={{ flex: 1, minWidth: '200px' }}

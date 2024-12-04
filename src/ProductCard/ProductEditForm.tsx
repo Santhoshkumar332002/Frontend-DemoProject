@@ -12,7 +12,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
+  Grid2,
   Card,
   CardMedia,
   Typography
@@ -158,20 +158,20 @@ const ProductEditForm: React.FC<ProductEditFormProps> = ({ open, onClose, produc
 
             <Box sx={{ mt: 2 }}>
               <Typography variant="body1" sx={{ color: "#674188", textAlign: 'center' }}>Current Images:</Typography>
-              <Grid container spacing={2}>
+              <Grid2 container spacing={2}>
                 {selectedImages.map((url, index) => (
-                  <Grid item xs={4} key={index}>
-                    <Card>
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={url.startsWith('http') ? url : `${BASE_URL}/${url}`}
-                        alt="product image"
-                      />
-                    </Card>
-                  </Grid>
+                   <Grid2 item xs={4} key={index}>
+                   <Card>
+                     <CardMedia
+                       component="img"
+                       height="140"
+                       image={url.startsWith('http') ? url : `${BASE_URL}/${url}`}
+                       alt="product image"
+                     />
+                   </Card>
+                 </Grid2>
                 ))}
-              </Grid>
+              </Grid2>
             </Box>
 
             <input

@@ -55,7 +55,7 @@ const productCreationSlice = createSlice({
       })
       .addCase(createProduct.rejected, (state, action: PayloadAction<string | undefined>) => {
         state.loading = false;
-        state.error = action.payload || "An unexpected error occurred";
+        state.error = action.payload ?? "An unexpected error occurred";
       });
   },
 });

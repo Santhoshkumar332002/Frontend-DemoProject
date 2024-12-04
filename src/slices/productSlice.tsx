@@ -106,7 +106,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action: PayloadAction<string | undefined>) => {
         state.loading = false;
-        state.error = action.payload || "An unexpected error occurred";
+        state.error = action.payload ?? "An unexpected error occurred";
       })
       .addCase(fetchFilteredProducts.pending, (state) => {
         state.loading = true;
@@ -115,11 +115,11 @@ const productSlice = createSlice({
       .addCase(fetchFilteredProducts.fulfilled, (state, action: PayloadAction<Product[]>) => {
         state.loading = false;
         state.items = action.payload;
-        console.log("Filtered products state:", state.items); // Log the filtered products state
+        console.log("Filtered products state:", state.items); 
       })
       .addCase(fetchFilteredProducts.rejected, (state, action: PayloadAction<string | undefined>) => {
         state.loading = false;
-        state.error = action.payload || "An unexpected error occurred";
+        state.error = action.payload ?? "An unexpected error occurred";
       });
   },
 });
