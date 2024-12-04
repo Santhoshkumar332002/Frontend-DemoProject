@@ -8,7 +8,7 @@ const modalStyle = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: '#F7EFE5', // Lightest background color
+  bgcolor: '#F7EFE5',
   borderRadius: '15px',
   boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
   p: 4,
@@ -17,8 +17,8 @@ const modalStyle = {
 const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   marginTop: theme.spacing(2),
-  backgroundColor: '#674188', // Dark purple background
-  color: '#F7EFE5', // Lightest background color
+  backgroundColor: '#674188',
+  color: '#F7EFE5', 
   '&:hover': {
     backgroundColor: '#C8A1E0', 
   },
@@ -27,12 +27,12 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const StyledCancelButton = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   marginTop: theme.spacing(2),
-  color: '#674188', // Dark purple text
-  borderColor: '#674188', // Dark purple border
+  color: '#674188', 
+  borderColor: '#674188', 
   borderWidth: 2,
   '&:hover': {
-    borderColor: '#C8A1E0', // Lighter purple for hover effect
-    color: '#C8A1E0', // Lighter purple text on hover
+    borderColor: '#C8A1E0', 
+    color: '#C8A1E0', 
   },
   borderStyle: 'solid',
 }));
@@ -46,8 +46,8 @@ interface LogoutModalProps {
 const LogoutModal: React.FC<LogoutModalProps> = ({ open, handleClose, onLogout }) => {
   const handleLogout = () => {
     onLogout();
-    window.location.reload(); // Refresh the page after logout
-  };
+    window.location.reload();
+  }
 
   return (
     <Modal open={open} onClose={handleClose}>

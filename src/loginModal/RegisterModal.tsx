@@ -22,16 +22,16 @@ const modalStyle = {
 const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   marginTop: theme.spacing(2),
-  backgroundColor: '#674188', // Dark purple color for the button
-  color: '#F7EFE5', // Light background for text contrast
+  backgroundColor: '#674188', 
+  color: '#F7EFE5', 
   '&:hover': {
-    backgroundColor: '#C8A1E0', // Lighter purple when hovered
+    backgroundColor: '#C8A1E0', 
   },
 }));
 
 const StyledDivider = styled(Divider)(({ theme }) => ({
   margin: `${theme.spacing(2)} 0`,
-  borderColor: '#C8A1E0', // Purple color for the divider
+  borderColor: '#C8A1E0', 
 }));
 
 interface RegisterModalProps {
@@ -83,8 +83,10 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, handleClose, onRegi
             onChange={(e) => setUsername(e.target.value)}
             variant="outlined"
             required
-            InputProps={{
-              style: { backgroundColor: '#E2BFD9' }, // Light purple background for input
+            slotProps={{
+              input: {
+                sx: { backgroundColor: '#E2BFD9' }, 
+              },
             }}
           />
           <TextField
@@ -96,8 +98,10 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, handleClose, onRegi
             onChange={(e) => setEmail(e.target.value)}
             variant="outlined"
             required
-            InputProps={{
-              style: { backgroundColor: '#E2BFD9' },
+            slotProps={{
+              input: {
+                sx: { backgroundColor: '#E2BFD9' }, 
+              },
             }}
           />
           <TextField
@@ -109,8 +113,10 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ open, handleClose, onRegi
             onChange={(e) => setPassword(e.target.value)}
             variant="outlined"
             required
-            InputProps={{
-              style: { backgroundColor: '#E2BFD9' },
+            slotProps={{
+              input: {
+                sx: { backgroundColor: '#E2BFD9' }, 
+              },
             }}
           />
           <StyledButton

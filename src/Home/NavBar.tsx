@@ -68,11 +68,13 @@ const NavBar: React.FC = () => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
-        PaperProps={{
-          sx: {
-            bgcolor: '#F7EFE5',
-            color: '#674188',
-            borderRadius: '8px',
+        slotProps={{
+          paper: {
+            sx: {
+              bgcolor: '#F7EFE5',           
+              color: '#674188',    
+              borderRadius: '8px',  
+            },
           },
         }}
       >

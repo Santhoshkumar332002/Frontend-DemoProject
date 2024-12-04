@@ -35,7 +35,9 @@ const ProductFilterForm: React.FC = () => {
       <TextField
         label="Created Date"
         type="date"
-        InputLabelProps={{ shrink: true }}
+        slotProps={{
+          inputLabel: { shrink: true } // Apply the InputLabelProps here
+        }}
         {...register("createdDate")}
         sx={{ flex: 1, minWidth: '200px' }}
       />

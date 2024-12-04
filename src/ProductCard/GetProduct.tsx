@@ -40,8 +40,8 @@ const ProductDashboard: React.FC = () => {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [productIdToDelete, setProductIdToDelete] = useState<string | null>(null);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
-  const [page, setPage] = useState(0); // Current page index
-  const [rowsPerPage, setRowsPerPage] = useState(3); // Number of rows per page
+  const [page, setPage] = useState(0); 
+  const [rowsPerPage, setRowsPerPage] = useState(3); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const ProductDashboard: React.FC = () => {
   const handleDeleteProduct = () => {
     if (productIdToDelete) {
       dispatch(deleteProduct(productIdToDelete)).then(() => {
-        dispatch(fetchProducts()); // Refresh product list after deletion
+        dispatch(fetchProducts()); 
       });
     }
     handleCloseDeleteDialog();
@@ -83,12 +83,15 @@ const ProductDashboard: React.FC = () => {
     return constructURL(BASE_URL, imagePath);
   };
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handleChangePage = (
+    _: React.MouseEvent<HTMLButtonElement> | null, 
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 3));
     setPage(0); // Reset page to 0 when rows per page change
   };
 
@@ -140,7 +143,7 @@ const ProductDashboard: React.FC = () => {
               </TableHead>
               <TableBody>
                 {currentProducts.map((product) => {
-                  const imageUrl = getImageUrl(product.images && product.images[0]);
+                  const imageUrl = getImageUrl(product.images?.[0]);
                   return (
                     <TableRow key={product._id}>
                       <TableCell>
@@ -153,7 +156,7 @@ const ProductDashboard: React.FC = () => {
                       <TableCell align="center">
                       <Button
                         variant="contained"
-                        color="#674188"
+                        
                         onClick={() => handleOpenEditDialog(product)}
                         sx={{ marginRight: "8px",color:"#674188",fontWeight:"bold" ,backgroundColor: "#F7EFE5" }}
                       >
@@ -174,7 +177,7 @@ const ProductDashboard: React.FC = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 15]}
+            rowsPerPageOptions={[3, 6, 12]}
             component="div"
             count={products.length}
             rowsPerPage={rowsPerPage}

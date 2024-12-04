@@ -53,7 +53,7 @@ const LoginModal: React.FC<{ open: boolean; handleClose: () => void; onRegisterC
         toast.success(message || "Login successful! Welcome back.");
         handleClose();
       } else if (login.rejected.match(result)) {
-        const errorMessage = result.error?.message || "Login failed. Please try again.";
+        const errorMessage = result.error?.message ?? "Login failed. Please try again.";
         toast.error(errorMessage);
       }
     } catch (error) {
@@ -88,8 +88,10 @@ const LoginModal: React.FC<{ open: boolean; handleClose: () => void; onRegisterC
             variant="outlined"
             error={status === 'failed' && !!error}
             helperText={status === 'failed' ? error : ''}
-            InputProps={{
-              style: { backgroundColor: '#E2BFD9' }, // Light purple background for input
+            slotProps={{
+              input: {
+                sx: { backgroundColor: '#E2BFD9' }, 
+              },
             }}
           />
           <TextField
@@ -102,8 +104,10 @@ const LoginModal: React.FC<{ open: boolean; handleClose: () => void; onRegisterC
             variant="outlined"
             error={status === 'failed' && !!error}
             helperText={status === 'failed' ? error : ''}
-            InputProps={{
-              style: { backgroundColor: '#E2BFD9' },
+            slotProps={{
+              input: {
+                sx: { backgroundColor: '#E2BFD9' }, 
+              },
             }}
           />
 
